@@ -1,5 +1,10 @@
+using System.Text;
 using DatingAPI.Data;
+using DatingAPI.Interfeaces;
+using DatingAPI.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,9 +26,23 @@ builder.Services.AddCors(options =>
                         .AllowAnyMethod());
 });
 
-
+builder.Services.AddScoped<ITokenService, TokenService>();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 //builder.Services.AddOpenApi();
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        var tokenKey = builder.Configuration["TokenKey"] ?? throw new InvalidOperationException("Token key is not configured.");
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenKey)),
+            ValidateIssuer = false,
+            ValidateAudience = false
+        };
+    });
+   
 
 var app = builder.Build();
 
@@ -38,7 +57,9 @@ app.UseCors("AllowAngularApp");
 
 //app.UseHttpsRedirection();
 
-//app.UseAuthorization();
+app.UseAuthentication();
+
+app.UseAuthorization();
 
 app.MapControllers();
 
