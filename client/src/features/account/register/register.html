@@ -1,0 +1,25 @@
+<div class="card bg-base-100 w-1/2 mx-auto flex flex-col p-6 rounded-lg shadow-lg"  >
+<div class="card-title justify-center text-3xl text-primary" >Sign up</div>
+<div class="card-body w-full">
+   <form #registerForm="ngForm" class="flex flex-col gap-4 w-full" (ngSubmit)="register()">
+     <input  class="input input-bordered w-full" 
+     placeholder="Email" name="email" [(ngModel)]="creds.email" required />
+       <input type="password" class="input input-bordered w-full" 
+     placeholder="password" name="password" [(ngModel)]="creds.password" required />
+       <input class="input input-bordered w-full" 
+     placeholder="displayName" name="displayName" [(ngModel)]="creds.displayName" required />
+  
+     <div class="flex items-center justify-end gap-3">
+        <button type="button" (click)="cancel()" class="btn w-1/4">Cancel</button>
+        <button type="submit" class="btn btn-primary w-1/4" [disabled]="registerForm.invalid">Register</button>
+
+     </div>
+   </form>
+    
+     <!--<select class="select select-bordered w-full">
+         <option disabled selected>Pick a member</option>
+         @for (member of membersFromHome(); track $index) {
+              <option value="{{member.id}}">{{member.displayName}}</option>
+         }
+     </select> -->
+</div>
