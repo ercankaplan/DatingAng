@@ -5,23 +5,33 @@ import { Nav } from "../layout/nav/nav";
 import { AccountService } from '../core/services/account-service';
 import { Home } from "../features/home/home";
 import type { User } from '../types/user';
+import { Router, RouterOutlet } from '@angular/router';
 
 
 @Component({
   selector: 'app-root',
-  imports: [Nav, Home],
+  imports: [Nav, RouterOutlet],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
+
+export class App  {
+
+  protected router = inject(Router);
+
+
+}
+/*
 export class App implements OnInit {
   private accountService = inject(AccountService);
+  protected router = inject(Router);
   private http = inject(HttpClient);
 
   protected readonly title = 'Dating App' //signal('Dating Angular App');
 
   protected members = signal<User[]>([]);
   //protected members: any;
-/*
+
   ngOnInit_old(): void {
     this.http.get<User>('https://localhost:5001/api/members').subscribe({
       next: response => this.members.set(response), //console.log(response),
@@ -29,17 +39,16 @@ export class App implements OnInit {
       complete: () => console.log('completed http request')
     });
   }
-*/
-  /*constructor(private http: HttpClient) {
+constructor(private http: HttpClient) {
     http.get('https://localhost:5001/api/users').subscribe({
       next: users => console.log(users),
       error: err => console.log(err)
     }); 
-  }*/
+  }
 
   async ngOnInit() {
     this.members.set(await this.membersAsync());
-    this.setCurrentUser();
+    //this.setCurrentUser(); move to init service
   }
   setCurrentUser() {
 
@@ -65,6 +74,6 @@ export class App implements OnInit {
       return [];
     }
   }
-
 }
+  */
 
