@@ -1,0 +1,20 @@
+<div class="card bg-base-100 w-1/2 mx-auto p-2 mt-24 shadow-xl"  >
+    <h2 class="text-3xl text-indigo-300 mb-6" >Test Error Component</h2>
+    <div class="flex flex-row gap-2">
+  <button class="btn btn-neutral mb-4" (click)="get404Error()">404 Not Found</button>
+  <button class="btn btn-accent mb-4" (click)="get400Error()">400 Bad Request</button>
+  <button class="btn btn-secondary mb-4" (click)="get500Error()">500 Server Error</button>
+  <button class="btn btn-success mb-4" (click)="get401Error()">401 Unauthorized</button>
+  <button class="btn btn-info mb-4" (click)="get400ValidationError()">400 Validation Error</button>
+    </div>
+</div>
+
+@if (validationErrors().length > 0) {
+  <div class="card bg-base-100 flex flex-col mt-4 rounded-2xl w-1/2 mx-auto p-10 shadow-xl">
+    <ul class="flex flex-col text-red-600 space-y-2">
+      @for (error of validationErrors(); track $index) {
+        <li>{{ error }}</li>
+      }
+    </ul>
+  </div>
+}
