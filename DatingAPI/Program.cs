@@ -1,6 +1,7 @@
 using System.Text;
 using DatingAPI.Data;
 using DatingAPI.Interfeaces;
+using DatingAPI.Middleware;
 using DatingAPI.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -46,6 +47,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 var app = builder.Build();
 
+app.UseMiddleware<ExceptionMiddleware>();
+
 app.UseCors("AllowAngularApp");
 
 // Configure the HTTP request pipeline.
@@ -56,6 +59,7 @@ app.UseCors("AllowAngularApp");
 //}
 
 //app.UseHttpsRedirection();
+
 
 app.UseAuthentication();
 
