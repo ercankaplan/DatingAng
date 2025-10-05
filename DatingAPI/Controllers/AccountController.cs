@@ -6,7 +6,7 @@ using System.Security.Cryptography;
 using DatingAPI.DTOs;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.Data;
-using DatingAPI.Interfeaces;
+using DatingAPI.Interfaces;
 using DatingAPI.Extensions;
 
 namespace DatingAPI.Controllers
