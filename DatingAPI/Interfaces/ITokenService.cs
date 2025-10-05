@@ -1,7 +1,7 @@
 using System;
 using DatingAPI.Entities;
 
-namespace DatingAPI.Interfeaces;
+namespace DatingAPI.Interfaces;
 
 public interface ITokenService
 {

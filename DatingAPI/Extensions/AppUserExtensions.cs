@@ -1,7 +1,7 @@
 using System;
 using DatingAPI.DTOs;
 using DatingAPI.Entities;
-using DatingAPI.Interfeaces;
+using DatingAPI.Interfaces;
 
 namespace DatingAPI.Extensions;
 

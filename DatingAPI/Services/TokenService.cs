@@ -2,7 +2,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using DatingAPI.Entities;
-using DatingAPI.Interfeaces;
+using DatingAPI.Interfaces;
 using Microsoft.IdentityModel.Tokens;
 
 namespace DatingAPI.Services;
