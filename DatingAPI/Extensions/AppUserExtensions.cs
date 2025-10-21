@@ -17,7 +17,7 @@ public static class AppUserExtensions
             Token = string.Empty,
             //Created = user.Created,
             //LastActive = user.LastActive,
-            //ImageUrl = user.Photos?.FirstOrDefault(p => p.IsMain)?.Url
+            ImgUrl = user.ImageUrl
         };
     }
     public static UserDto ToDto(this AppUser user,ITokenService tokenService)
@@ -30,7 +30,7 @@ public static class AppUserExtensions
             Token = tokenService.CreateToken(user),
             //Created = user.Created,
             //LastActive = user.LastActive,
-            //ImageUrl = user.Photos?.FirstOrDefault(p => p.IsMain)?.Url
+              ImgUrl = user.ImageUrl
         };
     }
     

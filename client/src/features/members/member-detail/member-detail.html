@@ -1,1 +1,7 @@
-<p>member-detail works!</p>
+@if(member$ | async; as member)
+{
+   <p>Member Name: {{ member.displayName }}</p>
+   <p>Member City: {{ member.city }}</p>
+}
+
+<button routerLink="/members" class="btn btn-secondary mt-4">Back to Members List</button>

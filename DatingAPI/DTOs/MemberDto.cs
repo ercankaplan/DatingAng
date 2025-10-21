@@ -9,7 +9,7 @@ public class UserDto
     public string DisplayName { get; set; } = "";
 
     public required string Token { get; set; } = "";
-    public string? ImageUrl { get; set; } 
+    public string? ImgUrl { get; set; } 
     public DateTime Created { get; set; }
     public DateTime LastActive { get; set; }
 }
