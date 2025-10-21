@@ -30,6 +30,7 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IMemberService, MemberService>();
 
 builder.Services.AddScoped<IMemberRepository, MemberRepository>();
 

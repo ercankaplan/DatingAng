@@ -28,7 +28,7 @@
             {
             <div class="dropdown dropdown-end">
                 <div tabindex="0" role="button" class="flex items-center text-white txt-xl gap-3 cursor-pointer">
-                    <img class="w-10 h-10 rounded-box" src="/user.png" alt="user avatar" />
+                    <img class="w-10 h-10 rounded-box" [src]="user?.imgUrl || '/user.png'" alt="user avatar" />
                     <span>{{user?.displayName}}</span>
                 </div>
                 <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
