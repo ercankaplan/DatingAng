@@ -5,9 +5,9 @@ export type Member = {
     imageUrl: string;
     displayName: string;
     created: string; // ISO date string
-    lastActivity: string; // ISO date string
+    lastActive: string; // ISO date string
     gender: string;
-    descriptiion?: string;
+    description?: string;
     city: string;
     country: string;
    
@@ -18,4 +18,5 @@ export type Photo = {
     url: string;
     memberId: string;
     publicId?: string;
+    isMain: boolean;
 };

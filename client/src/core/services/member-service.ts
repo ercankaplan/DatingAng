@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import type { Member } from '../../types/member';
+import type { Member, Photo } from '../../types/member';
 import { AccountService } from './account-service';
 
 @Injectable({
@@ -19,9 +19,13 @@ export class MemberService {
     return this.http.get<Member[]>(this.baseUrl + 'members');//, this.getHttpOptions()); jwtInterceptor will handle it
   }
 
-  getMemberById(id: number){
+  getMemberById(id: string){
 
     return this.http.get<Member>(this.baseUrl + 'members/' + id);//, this.getHttpOptions());
+  }
+
+  getMemberPhotos(memberId: string) {
+    return this.http.get<Photo[]>(this.baseUrl+'members/'+ memberId+'/photos');//, this.getHttpOptions());
   }
 
   private getHttpOptions() {
