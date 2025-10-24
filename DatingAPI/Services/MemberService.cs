@@ -22,5 +22,10 @@ namespace DatingAPI.Services
         {
             return await memberRepository.GetAllAsync();
         }
+
+        public async Task<IReadOnlyList<Member>> GetMatchedMembersAsync()
+        {
+            return await memberRepository.GetAllAsync();
+        }
     }
 }
