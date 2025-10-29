@@ -2,6 +2,7 @@ import { Component, inject, signal, type OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import type { Member } from '../../../types/member';
 import { DatePipe } from '@angular/common';
+import { MemberService } from '../../../core/services/member-service';
 
 //Date parser
 
@@ -13,7 +14,7 @@ import { DatePipe } from '@angular/common';
 })
 export class MemberProfile implements OnInit {
 
- 
+  protected memberService = inject(MemberService);
   private route = inject(ActivatedRoute);
   protected member = signal<Member | undefined>(undefined);
 

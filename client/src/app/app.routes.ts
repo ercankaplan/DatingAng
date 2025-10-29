@@ -17,6 +17,7 @@ export const routes: Routes = [
     { path: '', component: Home, title: 'Home' },
     { path:'',
         runGuardsAndResolvers: 'always',
+        //loadChildren:() => LazyLoadingModule,
         canActivate: [authGuard],
         children: [
             { path: 'members', component: MemberList, title: 'Members' },
