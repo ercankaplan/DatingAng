@@ -22,6 +22,14 @@ public class MemberRepository(AppDbContext context) : IMemberRepository
         return await _context.Members.FindAsync(id);
     }
 
+    public async Task<Member?> GetMemberForUpdateByIdAsync(string id)
+    {
+        return await _context.Members
+                .Include(i=> i.AppUser)
+                .SingleOrDefaultAsync(x => x.Id == id);
+    }
+
+
     public async Task<IReadOnlyList<Photo>> GetPhotosAsync(string memberId)
     {
         return await _context.Members
@@ -35,7 +43,7 @@ public class MemberRepository(AppDbContext context) : IMemberRepository
         return await _context.SaveChangesAsync() > 0;
     }
 
-    public void UpdateMember(Member member)
+    public async Task UpdateMemberAsync(Member member)
     {
         _context.Entry(member).State = EntityState.Modified;
     }

@@ -27,5 +27,15 @@ namespace DatingAPI.Services
         {
             return await memberRepository.GetAllAsync();
         }
+
+        public Task<Member?> GetMemberForUpdateByIdAsync(string id)
+        {
+            return memberRepository.GetMemberForUpdateByIdAsync(id);
+        }
+        public async Task<bool> UpdateMemberAsync(Member member)
+        {
+            await memberRepository.UpdateMemberAsync(member);
+            return await memberRepository.SaveAllAsync();
+        }
     }
 }

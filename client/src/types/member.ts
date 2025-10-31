@@ -20,3 +20,12 @@ export type Photo = {
     publicId?: string;
     isMain: boolean;
 };
+
+export type EditableMember = {
+    displayName: string;
+    dateOfBirth: string; // ISO date string
+    city: string;
+    country: string;
+    gender: string;
+    description?: string;
+};

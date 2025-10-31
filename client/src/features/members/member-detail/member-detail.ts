@@ -18,7 +18,7 @@ export class MemberDetail implements OnInit {
    private activatedRoute = inject(ActivatedRoute);
    private router = inject(Router); 
    //protected member$? : Observable<Member>;
-   protected member = signal<Member | undefined>(undefined);
+   //protected member = signal<Member | undefined>(undefined);
    protected title = signal<string | undefined>('Profile'); 
 
    protected isCurrentUser = computed( () => {
@@ -28,9 +28,9 @@ export class MemberDetail implements OnInit {
 
    ngOnInit(): void {
      //this.member$ = this.getMember();
-     this.activatedRoute.data.subscribe( {
-        next: data => this.member.set(data['member']),
-     });
+     //this.activatedRoute.data.subscribe( {
+       // next: data => this.member.set(data['member']),
+     //});
      
      this.title.set(this.activatedRoute.firstChild?.snapshot?.title || 'Profile');
 

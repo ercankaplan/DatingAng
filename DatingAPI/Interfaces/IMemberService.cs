@@ -9,5 +9,8 @@ namespace DatingAPI.Interfaces
         Task<IReadOnlyList<Member>> GetMembersAsync();
         Task<IReadOnlyList<Member>> GetMatchedMembersAsync();
         Task<IReadOnlyList<Photo>> GetMemberPhotosAsync(string id);
+
+        Task<Member?> GetMemberForUpdateByIdAsync(string id);
+        Task<bool> UpdateMemberAsync(Member member);
     }
 }
