@@ -1,0 +1,17 @@
+import { Injectable, signal } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class BusyService {
+  busyRequestCount = signal<number>(0);
+
+  busy() {
+    return this.busyRequestCount.update(current => current+1);
+  }
+
+  idle(){
+    return this.busyRequestCount.update(current => Math.max(0, current-1));
+  }
+
+}

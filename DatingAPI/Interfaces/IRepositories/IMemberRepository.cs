@@ -4,7 +4,9 @@ namespace DatingAPI.Interfaces.IRepositories
 {
     public interface IMemberRepository
     {
-        void UpdateMember(Member member);
+
+        Task<Member?> GetMemberForUpdateByIdAsync(string id);
+        Task UpdateMemberAsync(Member member);
 
         Task<bool> SaveAllAsync();
 

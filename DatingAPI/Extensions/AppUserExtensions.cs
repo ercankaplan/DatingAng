@@ -20,7 +20,7 @@ public static class AppUserExtensions
             ImgUrl = user.ImageUrl
         };
     }
-    public static UserDto ToDto(this AppUser user,ITokenService tokenService)
+    public static UserDto ToDto(this AppUser user, ITokenService tokenService)
     {
         return new UserDto
         {
@@ -30,10 +30,10 @@ public static class AppUserExtensions
             Token = tokenService.CreateToken(user),
             //Created = user.Created,
             //LastActive = user.LastActive,
-              ImgUrl = user.ImageUrl
+            ImgUrl = user.ImageUrl
         };
     }
-    
-    
 
+    
 }
+
