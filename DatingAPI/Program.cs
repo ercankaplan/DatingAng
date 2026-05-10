@@ -6,6 +6,8 @@ using DatingAPI.Middleware;
 using DatingAPI.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
@@ -83,15 +85,35 @@ app.MapFallbackToController("Index", "Fallback");
 
 using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;
+var logger = services.GetRequiredService<ILogger<Program>>();
+
 try
 {
     var context = services.GetRequiredService<AppDbContext>();
-    await context.Database.MigrateAsync();
+
+    var databaseCreator = context.Database.GetService<IRelationalDatabaseCreator>();
+    var databaseExists = await databaseCreator.ExistsAsync();
+
+    if (!databaseExists)
+    {
+        logger.LogInformation("Database does not exist. Applying all migrations.");
+        await context.Database.MigrateAsync();
+    }
+    else
+    {
+        var pendingMigrations = (await context.Database.GetPendingMigrationsAsync()).ToList();
+
+        if (pendingMigrations.Count != 0)
+        {
+            logger.LogInformation("Applying {MigrationCount} pending migrations.", pendingMigrations.Count);
+            await context.Database.MigrateAsync();
+        }
+    }
+
     await Seed.SeedUsers(context);
 }
 catch (Exception ex)
 {
-    var logger = services.GetRequiredService<ILogger<Program>>();
     logger.LogError(ex, "An error occurred during migration");
 }
 
