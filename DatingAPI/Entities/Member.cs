@@ -20,6 +20,11 @@ namespace DatingAPI.Entities
         [JsonIgnore]
         public ICollection<Photo> Photos { get; set; } = [];
 
+        [JsonIgnore]
+        public List<Message> MessagesSent { get; set; } = [];
+        [JsonIgnore]
+        public List<Message> MessagesReceived { get; set; } = [];
+
         // Navigation property to AppUser   
          [JsonIgnore]
         [ForeignKey(nameof(Id))]
