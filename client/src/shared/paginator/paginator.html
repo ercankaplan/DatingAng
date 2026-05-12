@@ -1,0 +1,20 @@
+<div class="flex items-center justify-between gap-3 mt-4">
+  <div class="text-sm opacity-70">
+    Page {{ pageNumber }} / {{ totalPages }} ({{ totalCount }} items)
+  </div>
+
+  <div class="join">
+    <button class="join-item btn btn-sm" [disabled]="!canPrev" (click)="prev()">Prev</button>
+
+    @for (p of pages; track p) {
+      <button
+        class="join-item btn btn-sm"
+        [class.btn-primary]="p === pageNumber"
+        (click)="changePage(p)">
+        {{ p }}
+      </button>
+    }
+
+    <button class="join-item btn btn-sm" [disabled]="!canNext" (click)="next()">Next</button>
+  </div>
+</div>

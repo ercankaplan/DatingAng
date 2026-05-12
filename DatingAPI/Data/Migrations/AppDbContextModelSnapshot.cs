@@ -93,6 +93,44 @@ namespace DatingAPI.Data.Migrations
                     b.ToTable("Members");
                 });
 
+            modelBuilder.Entity("DatingAPI.Entities.Message", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ReadAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("RecipientDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("RecipientId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("SenderDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SenderId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("SentAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RecipientId");
+
+                    b.HasIndex("SenderId");
+
+                    b.ToTable("Messages");
+                });
+
             modelBuilder.Entity("DatingAPI.Entities.Photo", b =>
                 {
                     b.Property<int>("Id")
@@ -133,6 +171,25 @@ namespace DatingAPI.Data.Migrations
                     b.Navigation("AppUser");
                 });
 
+            modelBuilder.Entity("DatingAPI.Entities.Message", b =>
+                {
+                    b.HasOne("DatingAPI.Entities.Member", "Recipient")
+                        .WithMany("MessagesReceived")
+                        .HasForeignKey("RecipientId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("DatingAPI.Entities.Member", "Sender")
+                        .WithMany("MessagesSent")
+                        .HasForeignKey("SenderId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Recipient");
+
+                    b.Navigation("Sender");
+                });
+
             modelBuilder.Entity("DatingAPI.Entities.Photo", b =>
                 {
                     b.HasOne("DatingAPI.Entities.Member", "AppUser")
@@ -151,6 +208,10 @@ namespace DatingAPI.Data.Migrations
 
             modelBuilder.Entity("DatingAPI.Entities.Member", b =>
                 {
+                    b.Navigation("MessagesReceived");
+
+                    b.Navigation("MessagesSent");
+
                     b.Navigation("Photos");
                 });
 #pragma warning restore 612, 618

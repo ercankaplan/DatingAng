@@ -31,6 +31,19 @@ namespace DatingAPI.Controllers
                 PasswordSalt = hmac.Key
             };
 
+            var member = new Member
+            {
+                Id = user.Id,
+                DisplayName = user.DisplayName,
+                Gender = string.Empty,
+                Description = string.Empty,
+                City = string.Empty,
+                Country = string.Empty,
+                DateOfBirth = DateOnly.FromDateTime(DateTime.UtcNow)
+            };
+
+            user.Member = member;
+
             context.Users.Add(user);
             await context.SaveChangesAsync();
             

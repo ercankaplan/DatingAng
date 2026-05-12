@@ -1,1 +1,70 @@
-<p>messages works!</p>
+<div class="flex flex-col w-full gap-4">
+    <div class="flex justify-between items-center">
+        <div class="tabs tabs-box tabs-lg text-primary w-fit">
+            @for (tab of tabs; track $index) {
+            <button role="tab" class="tab" [class.tab-active]="container === tab.value"
+                (click)="setContainer(tab.value)">
+                {{ tab.label }}
+            </button>
+            }
+        </div>
+    </div>
+
+    @if (paginatedResult(); as result) {
+
+    
+
+    <div class="overflow-x-auto mt-3">
+        <table class="table bg-base-100 table-fixed w-full">
+            <!-- head -->
+            <thead>
+                <tr>
+
+                    <th class="w-2/9">Sender / Recipient</th>
+                    <th class="w-4/9">Message</th>
+                    <th class="w-2/9">Sent At</th>
+                    <th class="w-1/9"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- row 1 -->
+
+                @for (message of result.items; track message.id) {
+
+                <tr [class.font-bold]="!message.readAt && isInbox"
+                    [routerLink]="['/members/', isInbox ? message.senderId : message.recipientId,'messages']"
+                    class="hover:bg-base-200 cursor-pointer">
+
+                    <td class="w-2/9">
+                        <div class="flex items-center gap-1">
+                            <div >
+                                <img [src]="isInbox ? message.senderImageUrl : message.recipientImageUrl || '/user.png'"
+                                    alt="Avatar" class="rounded-full w-10 h-10 object-cover" />
+                                <div>{{isInbox ? message.senderDisplayName : message.recipientDisplayName}}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="truncate w-4/9">{{message.content}}</td>
+                    <td class="w-2/9">{{message.sentAt | date:'short'}}</td>
+                    <td>
+                        <button (click)="deleteMessage($event, message.id)" class="btn btn-circle btn-ghost text-error" >
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            </svg>
+                        </button>
+                    </td>
+                </tr>
+                }
+
+
+
+            </tbody>
+        </table>
+    </div>
+
+    <app-paginator [hidden]="result.totalCount === 0" [pageNumber]="result.pageNumber" [pageSize]="result.pageSize"
+        [totalCount]="result.totalCount" [totalPages]="result.totalPages" (pageChange)="onPageChange($event)" />
+    }
+</div>

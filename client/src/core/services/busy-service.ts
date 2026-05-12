@@ -6,12 +6,18 @@ import { Injectable, signal } from '@angular/core';
 export class BusyService {
   busyRequestCount = signal<number>(0);
 
-  busy() {
-    return this.busyRequestCount.update(current => current+1);
+  busy(requestKey?: string) {
+    this.busyRequestCount.update(current => current + 1);
+    const nextCount = this.busyRequestCount();
+    console.log(`[Busy +] ${requestKey ?? 'unknown'} -> ${nextCount}`);
+    return nextCount;
   }
 
-  idle(){
-    return this.busyRequestCount.update(current => Math.max(0, current-1));
+  idle(requestKey?: string) {
+    this.busyRequestCount.update(current => Math.max(0, current - 1));
+    const nextCount = this.busyRequestCount();
+    console.log(`[Busy -] ${requestKey ?? 'unknown'} -> ${nextCount}`);
+    return nextCount;
   }
 
 }

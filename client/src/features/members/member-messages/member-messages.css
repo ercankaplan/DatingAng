@@ -1,0 +1,8 @@
+#message-thread {
+	scrollbar-width: none;
+	-ms-overflow-style: none;
+}
+
+#message-thread::-webkit-scrollbar {
+	display: none;
+}
