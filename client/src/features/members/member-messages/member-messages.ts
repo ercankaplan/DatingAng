@@ -1,4 +1,6 @@
 import { Component, ElementRef, effect, inject, signal, ViewChild, type OnInit } from '@angular/core';
+import { toSignal, toObservable } from '@angular/core/rxjs-interop';
+import { switchMap, of } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { MessageService } from '../../../core/services/message-service';
 import type { Message } from '../../../types/message';
@@ -23,7 +25,7 @@ export class MemberMessages implements OnInit {
   private route = inject(ActivatedRoute);
 
   private currentUserId = signal<string | null>(null);
-  protected memberId: string | null = null;
+  protected memberId = signal<string | null>(null);
   messages = signal<Message[]>([]);
   protected messageContent = '';
 
@@ -35,22 +37,28 @@ export class MemberMessages implements OnInit {
     });
   }
 
-
+  private rawMessages = toSignal(
+  toObservable(this.memberId).pipe(
+    switchMap(id => id ? this.messagesService.getMessageThread(id) : of([]))
+  ),
+  { initialValue: [] }
+);
 
   ngOnInit(): void {
 
     this.currentUserId.set(this.accountService.CurrentUser()?.id || null);
 
     this.route.parent?.paramMap.subscribe(params => {
-      this.memberId = params.get('id');
-      this.loadMessageThread();
+      this.memberId.set(params.get('id'));
+      // this.loadMessageThread();
     });
   }
 
   loadMessageThread() {
-    if (!this.memberId)
+    const id = this.memberId();
+    if (!id)
       return;
-    this.messagesService.getMessageThread(this.memberId).subscribe({
+    this.messagesService.getMessageThread(id).subscribe({
       next: (response) => {
 
         this.messages.set(response.map(msg => ({
@@ -75,9 +83,10 @@ export class MemberMessages implements OnInit {
   }
 
   sendMessage() {
-    if (!this.memberId) return;
+    const id = this.memberId();
+    if (!id) return;
 
-    this.messagesService.sendMessage(this.memberId, this.messageContent).subscribe({
+    this.messagesService.sendMessage(id, this.messageContent).subscribe({
       next: (newmessage) => {
         this.messages.update(messages => [...messages, { ...newmessage, isCurrentUserSender: true }]);
         this.messageContent = '';

@@ -12,4 +12,16 @@ public class RegisterDto
     [Required(ErrorMessage = "Password is required", AllowEmptyStrings = false)]
     [MinLength(6, ErrorMessage = "Password must be at least 6 characters long")]
     public string Password { get; set; } = "";
+
+    [Required]
+    public string Gender { get; set; } = "";
+
+    [Required]
+    public DateOnly DateOfBirth { get; set; }
+
+     [Required(ErrorMessage = "City is required", AllowEmptyStrings = false)]   
+    public string City { get; set; } = "";
+
+    [Required(ErrorMessage = "Country is required", AllowEmptyStrings = false)]
+    public string Country { get; set; } = "";
 }
