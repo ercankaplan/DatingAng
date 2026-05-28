@@ -35,11 +35,11 @@ namespace DatingAPI.Controllers
             {
                 Id = user.Id,
                 DisplayName = user.DisplayName,
-                Gender = string.Empty,
+                Gender = registerDto.Gender,
                 Description = string.Empty,
-                City = string.Empty,
-                Country = string.Empty,
-                DateOfBirth = DateOnly.FromDateTime(DateTime.UtcNow)
+                City = registerDto.City,
+                Country = registerDto.Country,
+                DateOfBirth = registerDto.DateOfBirth
             };
 
             user.Member = member;
